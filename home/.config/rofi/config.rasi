@@ -1,0 +1,90 @@
+configuration {
+  modi:  "drun,window,run";
+  font:  "UbuntuMono Nerd Font Mono 15";
+  show-icons: true;
+}
+
+* {
+  white:                          #FFFFFF;
+  black:                          #2D2A2E;
+  blue:                           #78DCE8;
+  magenta:                        #FF6188;
+  cyan:                           #18FF9E;
+  green:                          #A9DC76;
+  yellow:                         #FFD85B;
+  red:                            #FF443E;
+
+  bg:                             @black;
+  fg:                             @white;
+
+  background:                     @bg;
+  foreground:                     @fg;
+  text-color:                     @fg;
+
+  background-color:               @background;
+  background-alt:                 @background;
+  selected-color:                 @red;
+
+  normal-background:              @background; 
+  normal-foreground:              @foreground; 
+  active-background:              @background;
+  active-foreground:              @green;
+
+  selected-normal-background:     @green;
+  selected-normal-foreground:     @background;
+  selected-active-background:     @green;
+  selected-active-foreground:     @background;
+
+  alternate-normal-background:    @background;
+  alternate-normal-foreground:    @foreground;
+}
+
+window {
+  width:          650px;
+  padding:        20px 30px;
+  border:         3;
+  border-color:   @green;
+}
+
+mainbox {
+  border:  0;
+  padding: 0;
+}
+
+textbox {
+  highlight:  @highlight;
+  text-color: @foreground;
+}
+
+listview {
+  border:       2px solid 0 0;
+  padding:      5px;
+  border-color: @green;
+  spacing:      5px;
+  scrollbar:    false;
+  lines:        8;
+}
+
+element {
+  padding:          5px;
+}
+
+element.selected.normal {
+  background-color: @selected-normal-background;
+  text-color:       @selected-normal-foreground;
+}
+
+mode-switcher {
+  border:       2px 0 0;
+  border-color: @separatorcolor;
+}
+
+inputbar {
+  spacing:    0;
+  text-color: @normal-foreground;
+}
+
+entry {
+  text-color: @yellow;
+}
+

@@ -1,0 +1,4 @@
+set surround
+set textobj-entire
+set textobj-indent
+set argtextobj

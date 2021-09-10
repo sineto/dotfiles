@@ -1,0 +1,3 @@
+#!/usr/bin/env sh
+
+alias yayinf='fzf-yay.sh -S'

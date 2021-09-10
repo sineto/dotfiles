@@ -1,0 +1,21 @@
+#!/usr/bin/env sh
+
+source "$HOME/.zinit/bin/zinit.zsh"
+autoload -Uz _zinit
+(( ${+_comps} )) && _comps[zinit]=_zinit
+
+# Load a few importante annexes, without Turbo
+# (this is currently required for annexes)
+zinit light-mode for \
+    zinit-zsh/z-a-rust \
+    zinit-zsh/z-a-as-monitor \
+    zinit-zsh/z-a-patch-dl \
+    zinit-zsh/z-a-bin-gem-node
+
+source ~/.zsh/zinit-plugins.zsh
+
+for file in $files; do
+  if [[ -f $ZSH/$file ]]; then
+    source $ZSH/$file
+  fi
+done

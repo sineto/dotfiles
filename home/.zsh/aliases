@@ -12,6 +12,8 @@ alias gitsndev='git config user.email sineto.dev@gmail.com && git config core.ss
 alias gitmplus='git config user.email sinesio.neto@mobiplus.com.br && git config core.sshCommand "ssh -i ~/.ssh/id_rsa_mobiplus"'
 alias git_snio_gitlab='git config user.email gitlab@snio.dev && git config core.sshCommand "ssh -i ~/.ssh/id_rsa_sniogitlab"'
 
+alias gcop='fzf-git-checkout-branch.sh checkout --all'
+
 ## MISC
 alias cat='bat'
 alias listfonts='fc-list'

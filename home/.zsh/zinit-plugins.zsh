@@ -19,16 +19,17 @@ zinit ice from"gh" pick"lib/git.zsh" nocompletions blockf \
 	compile"lib/(${(j.|.)_ZSHRC_OMZ_LIBS})"
 
 zinit load robbyrussell/oh-my-zsh
-zinit snippet OMZ::plugins/git/git.plugin.zsh
-zinit snippet OMZ::plugins/vscode/vscode.plugin.zsh
-zinit snippet OMZ::plugins/colored-man-pages/colored-man-pages.plugin.zsh
-zinit snippet OMZ::plugins/common-aliases/common-aliases.plugin.zsh
-zinit snippet OMZ::plugins/archlinux/archlinux.plugin.zsh
-zinit snippet OMZ::plugins/golang/golang.plugin.zsh
-zinit snippet OMZ::plugins/asdf/asdf.plugin.zsh
+zinit snippet OMZ::plugins/git
+zinit snippet OMZ::plugins/vscode
+zinit snippet OMZ::plugins/colored-man-pages
+zinit snippet OMZ::plugins/common-aliases
+zinit snippet OMZ::plugins/archlinux
+zinit snippet OMZ::plugins/golang
+zinit snippet OMZ::plugins/asdf
+zinit snippet OMZ::plugins/terraform
 
 zinit ice as"completion"
-zinit snippet OMZ::plugins/httpie/_httpie
+zinit snippet OMZ::plugins/httpie
 
 ## powerlevel10k prompt
 zinit ice depth=1 atload'source ~/.p10k.zsh' lucid
@@ -56,9 +57,10 @@ zinit ice wait lucid
 zinit load hlissner/zsh-autopair
 
 # Gitignore plugin – commands gii and gi
+zinit light Aloxaf/fzf-tab
+
 zinit ice wait"2" lucid
 zinit load voronkovich/gitignore.plugin.zsh
-
 zinit light jeffreytse/zsh-vi-mode
 zinit light buonomo/yarn-completion
 zinit light sineto/web-search

@@ -1,0 +1,4 @@
+!#!/usr/bin/env sh 
+
+FZF_DEFAULT_COMMAND='ag --type f --hidden --follow --exclude .git'
+

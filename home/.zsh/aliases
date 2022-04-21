@@ -10,10 +10,85 @@ alias gitmain='git config user.email sn.sineto@gmail.com && git config core.sshC
 alias gitseco='git config user.email sinetoami@gmail.com && git config core.sshCommand "ssh -i ~/.ssh/id_rsa_sinetoami"'
 alias gitsndev='git config user.email sineto.dev@gmail.com && git config core.sshCommand "ssh -i ~/.ssh/id_rsa_sinetodev"'
 alias gitmplus='git config user.email sinesio.neto@mobiplus.com.br && git config core.sshCommand "ssh -i ~/.ssh/id_rsa_mobiplus"'
+alias gitcapsu='git config user.email capsulacards@gmail.com && git config core.sshCommand "ssh -i ~/.ssh/id_rsa_capsula"'
 alias git_snio_gitlab='git config user.email gitlab@snio.dev && git config core.sshCommand "ssh -i ~/.ssh/id_rsa_sniogitlab"'
 
+alias gbap='fzf-git-branch.sh branch --all'
 alias gcop='fzf-git-checkout-branch.sh checkout --all'
+alias gbdm='fzf-git-branch.sh branch --all -d'
+alias gbDm='fzf-git-branch.sh branch --all -D' # [g]it [b]ranch [d]elete [m]ulti
+
+## NPM, YARN
+alias yuil='yarn upgrade-interactive --latest'
+alias ya='yarn add'
+alias yaD='yarn -D add'
 
 ## MISC
 alias cat='bat'
 alias listfonts='fc-list'
+alias setmonitor='mons -n right'
+# alias ws='nohup webstorm $1 &'
+function wstorm() {
+  webstorm $1 </dev/null &>/dev/null &
+}
+
+function delete-branches() {
+  local branches_to_delete
+  branches_to_delete=$(git branch | fzf --multi)
+
+  if [ -n "$branches_to_delete" ]; then
+    git branch --delete --force $branches_to_delete
+  fi
+}
+
+fco_preview() {
+  local tags branches target
+  branches=$(
+    git --no-pager branch --all \
+      --format="%(if)%(HEAD)%(then)%(else)%(if:equals=HEAD)%(refname:strip=3)%(then)%(else)%1B[0;34;1mbranch%09%1B[m%(refname:short)%(end)%(end)" \
+    | sed '/^$/d') || return
+  tags=$(
+    git --no-pager tag | awk '{print "\x1b[35;1mtag\x1b[m\t" $1}') || return
+  target=$(
+    (echo "$branches"; echo "$tags") |
+    fzf --no-hscroll --no-multi -n 2 \
+        --ansi --preview="git --no-pager log -150 --pretty=format:%s '..{2}'") || return
+  git checkout $(awk '{print $2}' <<<"$target" )
+}
+
+fbr() {
+  local branches branch
+  branches=$(git for-each-ref --count=30 --sort=-committerdate refs/heads/ --format="%(refname:short)") &&
+  branch=$(echo "$branches" |
+           fzf-tmux -d $(( 2 + $(wc -l <<< "$branches") )) +m) &&
+  git checkout $(echo "$branch" | sed "s/.* //" | sed "s#remotes/[^/]*/##")
+}
+
+function pr-checkout() {
+  local jq_template pr_number
+
+  jq_template='"'\
+'#\(.number) - \(.title)'\
+'\t'\
+'Author: \(.user.login)\n'\
+'Created: \(.created_at)\n'\
+'Updated: \(.updated_at)\n\n'\
+'\(.body)'\
+'"'
+
+  pr_number=$(
+    gh api 'repos/:owner/:repo/pulls' |
+    jq ".[] | $jq_template" |
+    sed -e 's/"\(.*\)"/\1/' -e 's/\\t/\t/' |
+    fzf \
+      --with-nth=1 \
+      --delimiter='\t' \
+      --preview='echo -e {2}' \
+      --preview-window=top:wrap |
+    sed 's/^#\([0-9]\+\).*/\1/'
+  )
+
+  if [ -n "$pr_number" ]; then
+    gh pr checkout "$pr_number"
+  fi
+}
